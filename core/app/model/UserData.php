@@ -26,6 +26,13 @@ public static function getByID($id)
     return Model::one($query[0],new UserData());
 }
 
+public static function getUsers($k=1)
+{
+    $sql = "select * from user where kind=".$k;
+    $query = Executor::doit($sql);
+    return Model::many($query[0],new UserData());
+}
+
 }
 
 

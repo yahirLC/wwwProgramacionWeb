@@ -73,7 +73,7 @@ class Core {
 				echo $f;
 				//var_dump($f);
 			}
-			echo "tilin";
+			
 			unset($_SESSION["toastr"]);
 		}
 	}
