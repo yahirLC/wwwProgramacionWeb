@@ -307,11 +307,9 @@
                       </div>
                     </li>
                 -->
-                <?php
-
-                $user = UserData::getByID($_SESSION['user_id']);
-
-                ?>
+                    <?php
+                        $user  = UserData::getByID($_SESSION['user_id']);
+                    ?>
                 
                     <li class="nav-item dropdown">
                       <a class="py-0 nav-link d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
