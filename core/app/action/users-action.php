@@ -5,8 +5,6 @@ if(!isset($_SESSION['user_id'])) Core::redir("./");
 
 if(isset($_GET["opt"]) && $_GET["opt"] == "add"){
 
-
-
 	if(isset($_POST["nombre"]) and isset($_POST["email"]) and isset($_POST["username"])
 	 and isset($_POST["password"])){
 
@@ -29,6 +27,13 @@ if(isset($_GET["opt"]) && $_GET["opt"] == "add"){
 
 }
 
+if (isset($_GET["opt"]) && $_GET["opt"] == "delete") {
+    if (isset($_POST["usuariosEliminar"]) && is_array($_POST["usuariosEliminar"])) {
+        foreach ($_POST["usuariosEliminar"] as $userId) {
+            UserData::deleteById($userId);
 
 
+        }
+    }
+}
 ?>

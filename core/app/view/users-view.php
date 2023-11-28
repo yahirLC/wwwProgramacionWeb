@@ -23,6 +23,9 @@ if(isset($_GET["opt"]) && $_GET["opt"] == "all"){
 			<a class="btn btn-primary pull-right" href="./?view=users&opt=add"><i class="bi-persons"> </i>
 			 Nuevo</a>
 
+			 <a class="btn btn-danger pull-right mx-2" href="./?view=users&opt=delete"><i class="bi-persons"> </i>
+                    Eliminar</a>
+
 		</div>
 		<?php
 			if(count($listaUsuarios)>0){
@@ -139,6 +142,83 @@ if(isset($_GET["opt"]) && $_GET["opt"] == "all"){
 
 <?php
 
-}
+}elseif(isset($_GET["opt"]) && $_GET["opt"] == "delete"){
+?>
 
+
+    <!-- Agrega esta sección para mostrar la lista de usuarios -->
+    <div class="col-xl-12 col-lg-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <div class="header-title">
+                    <h4 class="card-title">Eliminar usuarios</h4>
+                </div>
+            </div>
+            <div class="card-body">
+                <form id="deleteForm" method="post" action="./?action=users&opt=delete" onsubmit="return confirmDelete();">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Nombre</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            // Reemplaza esta parte con tu lógica para obtener la lista de usuarios desde la base de datos
+                            $listaUsuarios = UserData::getUsersbyKind();
+
+                            if (count($listaUsuarios) > 0) {
+                                foreach ($listaUsuarios as $user) {
+                                    echo "<tr>";
+                                    echo "<td><input type='checkbox' name='usuariosEliminar[]' value='{$user->id}'></td>";
+                                    echo "<td>{$user->nombre}</td>";
+                                    echo "<td>{$user->username}</td>";
+                                    echo "<td>{$user->email}</td>";
+                                    echo "</tr>";
+                                }
+                            } else {
+                                echo "<tr><td colspan='4'>No hay usuarios para mostrar</td></tr>";
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                    <?php
+                    if (count($listaUsuarios) > 0) {
+                    ?>
+                        <button type="submit" class="btn btn-danger">Eliminar usuarios seleccionados</button>
+                    <?php
+                    }
+                    ?>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function confirmDelete() {
+            var checkboxes = document.getElementsByName('usuariosEliminar[]');
+            var selectedUsers = [];
+
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].checked) {
+                    selectedUsers.push(checkboxes[i].value);
+                }
+            }
+
+            if (selectedUsers.length > 0) {
+                var confirmation = confirm("¿Seguro que quieres eliminar al usuario con ID=" + selectedUsers.join(', ') + "?");
+
+                return confirmation;
+            } else {
+                alert("Por favor, selecciona al menos un usuario para eliminar.");
+                return false;
+            }
+        }
+    </script>
+
+    <?php
+}
 ?>

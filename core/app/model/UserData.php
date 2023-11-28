@@ -42,6 +42,14 @@ class UserData extends Extra{
 		return Executor::doit($sql);
 
 	}
+
+	public static function deleteById($id){
+    $sql = "delete from user WHERE id = $id";
+    return Executor::doit($sql);
+
+
+}
+
 }
 
 ?>
